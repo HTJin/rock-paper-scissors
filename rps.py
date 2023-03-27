@@ -4,17 +4,6 @@ from urllib.request import urlopen
 from PIL import Image, ImageTk
 import tkinter as tk
 
-def show_image(url):
-    with urlopen(url) as response:
-        image_data = response.read()
-    image = Image.open(BytesIO(image_data))
-    root = tk.Tk()
-    root.title('Image')
-    photo = ImageTk.PhotoImage(image)
-    label = tk.Label(root, image=photo)
-    label.pack()
-    root.mainloop()
-
 def generatePlay():
     randomNum = randint(0, 3)
 
@@ -28,46 +17,6 @@ def generatePlay():
 def choosePlayer(player_name, playersDict, score = 0, combo = 0, w_streak = 0, l_streak = 0):
     playersDict.update({player_name: {'score': score, 'combo': combo, 'w_streak': w_streak, 'l_streak': l_streak}})
     return playersDict
-
-def determineRank(score):
-    rank = 'Newbie'
-    if score == 0: return rank
-    elif 0 < score <= 5: rank = 'Bronze'
-    elif 5 < score <= 10: rank = 'Silver'
-    elif 10 < score <= 15: rank = 'Gold'
-    elif 15 < score <= 20: rank = 'Platinum'
-    elif 20 < score <= 25: rank = 'Diamond'
-    elif 25 < score <= 30: rank = 'Master'
-    elif 30 < score <= 35: rank = 'Grandmaster'
-    elif score > 35: rank = 'G O A T'
-    elif 0 > score >= -5: rank = 'Egg'
-    elif -5 > score >= -10: rank = 'Unlucky'
-    elif -10 > score >= -15: rank = 'Loser'
-    elif -15 > score >= -20: rank = 'Weenie'
-    elif -20 > score >= -25: rank = 'Super Weenie'
-    elif -25 > score >= -30: rank = 'Mega Weenie Loser'
-    elif -30 > score >= -35: rank = 'Hardstuck Loser'
-    elif score < -35: rank = 'Trash'
-    return rank
-        
-def imgPop(score):
-    if score == 0: return show_image('https://www.shutterstock.com/image-illustration/newbie-new-employee-member-introduction-260nw-1165795669.jpg') 
-    elif 0 < score <= 5: return show_image('https://cdn.vectorstock.com/i/1000x1000/34/73/bronze-medal-with-number-three-icon-cartoon-style-vector-14203473.webp')
-    elif 5 < score <= 10: return show_image('https://content.presentermedia.com/files/clipart/00003000/3720/silver_medal_award_second_place_800_wht.jpg')
-    elif 10 < score <= 15: return show_image('https://thumbs.dreamstime.com/z/little-girl-golden-medal-thumb-up-13280539.jpg')
-    elif 15 < score <= 20: return show_image('https://2.bp.blogspot.com/-PS_V0OKZ9Y4/WRUIbVKaPaI/AAAAAAAAAFo/m2yllJgumwMCrCwGepTGSvBhzJH5KNLUgCLcB/s1600/Pokemon_Light_Platinum_BoxArt.png')
-    elif 20 < score <= 25: return show_image('https://www.nativeskatestore.co.uk/images/dgk-dgk-x-diamond-skateboard-sticker-p10165-20666_medium.jpg')
-    elif 25 < score <= 30: return show_image('https://upload.wikimedia.org/wikipedia/en/7/72/MCS12poster.jpg')
-    elif 30 < score <= 35:  return show_image('https://www.scrolldroll.com/wp-content/uploads/2022/07/quotes-from-Kung-Fu-Panda-7.jpg')
-    elif score > 35: return show_image('http://1.bp.blogspot.com/-XdRtST5NkrM/T7z433dfS9I/AAAAAAAAGFs/A7Agez6HAxs/s1600/mountain_goat.jpg')
-    elif 0 > score >= -5: return show_image('https://www.photos-elsoar.com/wp-content/images/Egg-Picture-A.jpg')
-    elif -5 >  score >= -10: return show_image('https://www.underscores.fr/wp-content/uploads/2019/07/Unlucky-Charms-Cover.jpg')
-    elif -10 > score >= -15: return show_image('https://external-preview.redd.it/OZGPYpQASrrhEJVKGMHbtKYsL5lS6Vpn1WG2gD_1UFc.jpg?auto=webp&v=enabled&s=8a6c28faa60b9fd35c4fec1bf5fa0a34a70a35b4')
-    elif -15 > score >= -20: return show_image('https://www.sbmania.net/pictures/48a/207.png')
-    elif -20 > score >= -25: return show_image('https://static.wikia.nocookie.net/spongebob/images/5/52/SuperWeenieHutJrsStock.png/revision/latest/scale-to-width-down/1000?cb=20221117021328')
-    elif -25 > score >= -30: return show_image('https://static.wikia.nocookie.net/spongebob/images/1/19/No_Weenies_Allowed_200.png/revision/latest/scale-to-width-down/1000?cb=20200806153155')
-    elif -30 > score >= -35: return show_image('https://external-preview.redd.it/OZGPYpQASrrhEJVKGMHbtKYsL5lS6Vpn1WG2gD_1UFc.jpg?auto=webp&v=enabled&s=8a6c28faa60b9fd35c4fec1bf5fa0a34a70a35b4')
-    elif score < -35: return show_image('https://i.redd.it/xf5mv2emtyb71.png')
 
 def playGame():
     moves = ['rock', 'r', 'paper', 'p', 'scissors', 's', 'rank', 'score', 'create', 'switch', 'i quit', 'players']
@@ -128,7 +77,7 @@ def playGame():
                 prPink('\n'.join(player for player in players.keys()))
                 switch_name = input(prLPurpleNone("Player name you wish to switch to? "))
                 if switch_name not in players.keys():
-                    print(f'Player {prPinkNone(switch_name)} was not found as a player. Try again.\n')
+                    print(f"Player {prPinkNone(switch_name)} was {prRedNone('not found')} as a player. Try again.\n")
                 else:
                     print(f'Switching over to Player "{prPinkNone(switch_name)}"!\n')
                     user_name = switch_name
@@ -216,6 +165,57 @@ def playGame():
                 prGreen('You Win')
             elif cpu_move == "Scissors":
                 prYellow('Game Tied')
+
+def determineRank(score):
+    rank = 'Newbie'
+    if score == 0: return rank
+    elif 0 < score <= 5: rank = 'Bronze'
+    elif 5 < score <= 10: rank = 'Silver'
+    elif 10 < score <= 15: rank = 'Gold'
+    elif 15 < score <= 20: rank = 'Platinum'
+    elif 20 < score <= 25: rank = 'Diamond'
+    elif 25 < score <= 30: rank = 'Master'
+    elif 30 < score <= 35: rank = 'Grandmaster'
+    elif score > 35: rank = 'G O A T'
+    elif 0 > score >= -5: rank = 'Egg'
+    elif -5 > score >= -10: rank = 'Unlucky'
+    elif -10 > score >= -15: rank = 'Loser'
+    elif -15 > score >= -20: rank = 'Weenie'
+    elif -20 > score >= -25: rank = 'Super Weenie'
+    elif -25 > score >= -30: rank = 'Mega Weenie Loser'
+    elif -30 > score >= -35: rank = 'Hardstuck Loser'
+    elif score < -35: rank = 'Trash'
+    return rank
+
+def imgPop(score):
+    if score == 0: return show_image('https://www.shutterstock.com/image-illustration/newbie-new-employee-member-introduction-260nw-1165795669.jpg') 
+    elif 0 < score <= 5: return show_image('https://cdn.vectorstock.com/i/1000x1000/34/73/bronze-medal-with-number-three-icon-cartoon-style-vector-14203473.webp')
+    elif 5 < score <= 10: return show_image('https://content.presentermedia.com/files/clipart/00003000/3720/silver_medal_award_second_place_800_wht.jpg')
+    elif 10 < score <= 15: return show_image('https://thumbs.dreamstime.com/z/little-girl-golden-medal-thumb-up-13280539.jpg')
+    elif 15 < score <= 20: return show_image('https://2.bp.blogspot.com/-PS_V0OKZ9Y4/WRUIbVKaPaI/AAAAAAAAAFo/m2yllJgumwMCrCwGepTGSvBhzJH5KNLUgCLcB/s1600/Pokemon_Light_Platinum_BoxArt.png')
+    elif 20 < score <= 25: return show_image('https://www.nativeskatestore.co.uk/images/dgk-dgk-x-diamond-skateboard-sticker-p10165-20666_medium.jpg')
+    elif 25 < score <= 30: return show_image('https://upload.wikimedia.org/wikipedia/en/7/72/MCS12poster.jpg')
+    elif 30 < score <= 35:  return show_image('https://www.scrolldroll.com/wp-content/uploads/2022/07/quotes-from-Kung-Fu-Panda-7.jpg')
+    elif score > 35: return show_image('http://1.bp.blogspot.com/-XdRtST5NkrM/T7z433dfS9I/AAAAAAAAGFs/A7Agez6HAxs/s1600/mountain_goat.jpg')
+    elif 0 > score >= -5: return show_image('https://www.photos-elsoar.com/wp-content/images/Egg-Picture-A.jpg')
+    elif -5 >  score >= -10: return show_image('https://www.underscores.fr/wp-content/uploads/2019/07/Unlucky-Charms-Cover.jpg')
+    elif -10 > score >= -15: return show_image('https://external-preview.redd.it/OZGPYpQASrrhEJVKGMHbtKYsL5lS6Vpn1WG2gD_1UFc.jpg?auto=webp&v=enabled&s=8a6c28faa60b9fd35c4fec1bf5fa0a34a70a35b4')
+    elif -15 > score >= -20: return show_image('https://www.sbmania.net/pictures/48a/207.png')
+    elif -20 > score >= -25: return show_image('https://static.wikia.nocookie.net/spongebob/images/5/52/SuperWeenieHutJrsStock.png/revision/latest/scale-to-width-down/1000?cb=20221117021328')
+    elif -25 > score >= -30: return show_image('https://static.wikia.nocookie.net/spongebob/images/1/19/No_Weenies_Allowed_200.png/revision/latest/scale-to-width-down/1000?cb=20200806153155')
+    elif -30 > score >= -35: return show_image('https://external-preview.redd.it/OZGPYpQASrrhEJVKGMHbtKYsL5lS6Vpn1WG2gD_1UFc.jpg?auto=webp&v=enabled&s=8a6c28faa60b9fd35c4fec1bf5fa0a34a70a35b4')
+    elif score < -35: return show_image('https://i.redd.it/xf5mv2emtyb71.png')
+
+def show_image(url):
+    with urlopen(url) as response:
+        image_data = response.read()
+    image = Image.open(BytesIO(image_data))
+    root = tk.Tk()
+    root.title('Image')
+    photo = ImageTk.PhotoImage(image)
+    label = tk.Label(root, image=photo)
+    label.pack()
+    root.mainloop()
 
 def prRed(skk): return print("\033[31m{}\033[00m".format(skk))
 def prRedNone(skk): return "\033[31m{}\033[00m".format(skk)
