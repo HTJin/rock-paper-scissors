@@ -1,4 +1,19 @@
 from random import randint
+from io import BytesIO
+from urllib.request import urlopen
+from PIL import Image, ImageTk
+import tkinter as tk
+
+def show_image(url):
+    with urlopen(url) as response:
+        image_data = response.read()
+    image = Image.open(BytesIO(image_data))
+    root = tk.Tk()
+    root.title('Image')
+    photo = ImageTk.PhotoImage(image)
+    label = tk.Label(root, image=photo)
+    label.pack()
+    root.mainloop()
 
 def generatePlay():
     randomNum = randint(0, 3)
@@ -35,58 +50,24 @@ def determineRank(score):
     elif score < -35: rank = 'Trash'
     return rank
         
-def link(score):
-    if score == 0: return "Enter the link" 
-    elif score <= 5: 
-        return input(
-            "Enter the link:https://www.vectorstock.com/royalty-free-vector/bronze-medal-with-number-three-icon-cartoon-style-vector-14203473")
-    elif score <= 10:
-        return input(
-            "Enter the link:https://pixabay.com/illustrations/medal-silver-award-competition-1622529/")
-    elif score <= 15:
-        return input(
-            "Enter the link:https://www.dreamstime.com/royalty-free-stock-images-little-girl-golden-medal-thumb-up-image13280539")
-    elif score <= 20:
-        return input(
-            "Enter the link:https://pokemonromhack.com/wp-content/uploads/2014/06/Pokemon_Light_Platinum_BoxArt.png")
-    elif score <= 25:
-        return input(
-            "Enter the link:https://www.nativeskatestore.co.uk/accessories-c3/skateboard-stickers-c15/dgk-dgk-x-diamond-skateboard-sticker-p10165")
-    elif score <= 30:
-        return input(
-            "Enter the link:https://en.wikipedia.org/wiki/MasterChef_(American_season_12)#/media/File:MCS12poster.jpg")
-    elif score <= 35: 
-        return input(
-            "Enter the link:https://twitter.com/GrandMOogway")
-    elif score > 35:
-        return input(
-            "Enter the link:http://1.bp.blogspot.com/-XdRtST5NkrM/T7z433dfS9I/AAAAAAAAGFs/A7Agez6HAxs/s1600/mountain_goat.jpg")
-    
-    elif score >= -5:
-        return input(
-            "Enter the link:https://www.photos-elsoar.com/wp-content/images/Egg-Picture-A.jpg")
-    elif score >= -10:
-        return input(
-            "Enter the link:https://www.underscores.fr/wp-content/uploads/2019/07/Unlucky-Charms-Cover.jpg")
-    elif score >= -15:
-        return input(
-            "Enter the link:https://external-preview.redd.it/OZGPYpQASrrhEJVKGMHbtKYsL5lS6Vpn1WG2gD_1UFc.jpg?auto=webp&v=enabled&s=8a6c28faa60b9fd35c4fec1bf5fa0a34a70a35b4")
-    elif score >= -20:
-        return input(
-            "Enter the link:https://www.sbmania.net/locations.php?id=96")
-    elif score >= -25:
-        return input(
-            "Enter the link:https://spongebob.fandom.com/wiki/Super_Weenie_Hut_Jr's?file=SuperWeenieHutJrsStock.png")
-    elif score >= -30:
-        return input(
-            "Enter the link:https://spongebob.fandom.com/wiki/Weenie_Hut_General?file=No_Weenies_Allowed_200.png")
-    elif score >= -35:
-        return input(
-            "Enter the link:https://external-preview.redd.it/OZGPYpQASrrhEJVKGMHbtKYsL5lS6Vpn1WG2gD_1UFc.jpg?auto=webp&v=enabled&s=8a6c28faa60b9fd35c4fec1bf5fa0a34a70a35b4")
-    elif score < -35:
-        return input(
-            "Enter the link:https://biogossipy.com/playboi-carti-bio-age-affair-songs-model-net-worth-height/")
-
+def imgPop(score):
+    if score == 0: return show_image('https://www.shutterstock.com/image-illustration/newbie-new-employee-member-introduction-260nw-1165795669.jpg') 
+    elif 0 < score <= 5: return show_image('https://cdn.vectorstock.com/i/1000x1000/34/73/bronze-medal-with-number-three-icon-cartoon-style-vector-14203473.webp')
+    elif 5 < score <= 10: return show_image('https://content.presentermedia.com/files/clipart/00003000/3720/silver_medal_award_second_place_800_wht.jpg')
+    elif 10 < score <= 15: return show_image('https://thumbs.dreamstime.com/z/little-girl-golden-medal-thumb-up-13280539.jpg')
+    elif 15 < score <= 20: return show_image('https://2.bp.blogspot.com/-PS_V0OKZ9Y4/WRUIbVKaPaI/AAAAAAAAAFo/m2yllJgumwMCrCwGepTGSvBhzJH5KNLUgCLcB/s1600/Pokemon_Light_Platinum_BoxArt.png')
+    elif 20 < score <= 25: return show_image('https://www.nativeskatestore.co.uk/images/dgk-dgk-x-diamond-skateboard-sticker-p10165-20666_medium.jpg')
+    elif 25 < score <= 30: return show_image('https://upload.wikimedia.org/wikipedia/en/7/72/MCS12poster.jpg')
+    elif 30 < score <= 35:  return show_image('https://www.scrolldroll.com/wp-content/uploads/2022/07/quotes-from-Kung-Fu-Panda-7.jpg')
+    elif score > 35: return show_image('http://1.bp.blogspot.com/-XdRtST5NkrM/T7z433dfS9I/AAAAAAAAGFs/A7Agez6HAxs/s1600/mountain_goat.jpg')
+    elif 0 > score >= -5: return show_image('https://www.photos-elsoar.com/wp-content/images/Egg-Picture-A.jpg')
+    elif -5 >  score >= -10: return show_image('https://www.underscores.fr/wp-content/uploads/2019/07/Unlucky-Charms-Cover.jpg')
+    elif -10 > score >= -15: return show_image('https://external-preview.redd.it/OZGPYpQASrrhEJVKGMHbtKYsL5lS6Vpn1WG2gD_1UFc.jpg?auto=webp&v=enabled&s=8a6c28faa60b9fd35c4fec1bf5fa0a34a70a35b4')
+    elif -15 > score >= -20: return show_image('https://www.sbmania.net/pictures/48a/207.png')
+    elif -20 > score >= -25: return show_image('https://static.wikia.nocookie.net/spongebob/images/5/52/SuperWeenieHutJrsStock.png/revision/latest/scale-to-width-down/1000?cb=20221117021328')
+    elif -25 > score >= -30: return show_image('https://static.wikia.nocookie.net/spongebob/images/1/19/No_Weenies_Allowed_200.png/revision/latest/scale-to-width-down/1000?cb=20200806153155')
+    elif -30 > score >= -35: return show_image('https://external-preview.redd.it/OZGPYpQASrrhEJVKGMHbtKYsL5lS6Vpn1WG2gD_1UFc.jpg?auto=webp&v=enabled&s=8a6c28faa60b9fd35c4fec1bf5fa0a34a70a35b4')
+    elif score < -35: return show_image('https://i.redd.it/xf5mv2emtyb71.png')
 
 def playGame():
     moves = ['rock', 'r', 'paper', 'p', 'scissors', 's', 'rank', 'score', 'create', 'switch', 'i quit', 'players']
@@ -98,7 +79,8 @@ def playGame():
     print(f'\nWelcome Player {prPinkNone(user_name)}!')
     rank = determineRank(0)
     print(f'Looks like your rank is: {prOrangeNone(rank)}, with a score of {prBlueNone(score)}')
-    
+    imgPop(players[user_name]['score'])
+
     while True:
         cpu_move = generatePlay()
         player_move = input(prLPurpleNone(f"\nThrow your move [{prGreenNone('Rock')}{prLPurpleNone('/')}{prGreenNone('Paper')}{prLPurpleNone('/')}{prGreenNone('Scissors')}{prLPurpleNone(' or ')}{prGreenNone('r')}{prLPurpleNone('/')}{prGreenNone('p')}{prLPurpleNone('/')}{prGreenNone('s')}{prLPurpleNone('], ')}{prGreenNone('rank/score')}{prLPurpleNone(', ')}{prGreenNone('create')}{prLPurpleNone(', ')}{prGreenNone('switch')}{prLPurpleNone(', or ')}{prLPurpleNone('type')} {prRedNone('I quit')}{prLPurpleNone(':')} ")).strip().lower()
@@ -142,7 +124,9 @@ def playGame():
                     prYellow('There are no other users to switch to.')
                     break
                 players = choosePlayer(user_name, players, score, combo, w_streak, l_streak)
-                switch_name = input("Player name you wish to switch to? ")
+                prGreenBg('[ -- SWITCHABLE PLAYERS -- ]')
+                prPink('\n'.join(player for player in players.keys()))
+                switch_name = input(prLPurpleNone("Player name you wish to switch to? "))
                 if switch_name not in players.keys():
                     print(f'Player {prPinkNone(switch_name)} was not found as a player. Try again.\n')
                 else:
@@ -152,14 +136,15 @@ def playGame():
                     print(f'Welcome back Player {prPinkNone(user_name)}!')
                     rank = determineRank(players[user_name]['score'])
                     print(f"\n{prPinkNone(user_name)}'s rank is: {prOrangeNone(rank)}, with a score of {prBlueNone(players[user_name]['score'])}")
+                    imgPop(players[user_name]['score'])
                     print(f"You left the game with your combo at {prCyanNone(players[user_name]['combo'])}, with a win streak of {prGreenNone(players[user_name]['w_streak'])} round(s), and a loss streak of {prRedNone(abs(players[user_name]['l_streak']))} round(s)")
                     break
         
         elif player_move == 'rank' or player_move == 'score':
             rank = determineRank(players[user_name]['score'])
             print(f"\n{prPinkNone(user_name)}'s rank is: {prOrangeNone(rank)}, with a score of {prBlueNone(players[user_name]['score'])}")
-            link(players[user_name]["score"])
-        
+            imgPop(players[user_name]['score'])
+
         elif player_move == 'i quit':
             prYellow('\nThank you for playing\n')
             prRedBg('[ -- DAILY HIGHSCORES -- ]')
@@ -243,8 +228,10 @@ def prCyan(skk): return print("\033[36m{}\033[00m".format(skk))
 def prCyanNone(skk): return "\033[36m{}\033[00m".format(skk)
 def prYellow(skk): return print("\033[93m{}\033[00m".format(skk))
 def prLPurpleNone(skk): return "\033[94m{}\033[00m".format(skk)
+def prPink(skk): return print("\033[95m{}\033[00m".format(skk))
 def prPinkNone(skk): return "\033[95m{}\033[00m".format(skk)
 def prLCyan(skk): return print("\033[96m{}\033[00m".format(skk))
 def prRedBg(skk): return print("\033[41m{}\033[00m".format(skk))
+def prGreenBg(skk): return print("\033[42m{}\033[00m".format(skk))
 
 playGame()
